@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Lightbox page</title>
+    <meta charset="UTF-8">
+   <!-- <meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
+    <link rel="stylesheet" type="text/css" href="css/app/lightbox-effect.css">
+    <script src="js/app/lightbox-script.js"></script>
+</head>
+<body>
+
+<div class="search-container">
+    <input id="search" type="text" placeholder="Search..." name="search" onkeypress="search(event)">
+    <div id='button-holder'>
+        <button type="button" onclick="search(event)"> <img src="images/magnifying_glass.png" /> </button>
+    </div>
+    <div id="error"></div>
+</div>
+<div id="loading" class="loading"><img src="images/loading.gif"></div>
+<div id="id-gallery" class="gallery"></div>
+<div id="id-modal" class="modal">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div id="id-modal-content" class="modal-content">
+        <div id="id-slides">
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+</div>
+</body>
+</html>
