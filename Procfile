@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/lightbox-0.0.1-SNAPSHOT-classes.jar
+web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/lightbox-0.0.1-SNAPSHOT.war
