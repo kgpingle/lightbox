@@ -11,12 +11,10 @@
 <body>
 
 <div class="search-container">
-    <input id="search" type="text" placeholder="Search..." name="search" onkeypress="search(event)">
-    <div id='button-holder'>
-        <button type="button" onclick="search(event)"> <img src="images/magnifying_glass.png" /> </button>
-    </div>
-    <div id="error"></div>
+    <input id="search" type="text" placeholder="Search..." name="search" onkeypress="keypress(event)">
+    <img src="images/magnifying_glass.png" onclick="search()" />
 </div>
+<div id="error"></div>
 <div id="loading" class="loading"><img src="images/loading.gif"></div>
 <div id="id-gallery" class="gallery"></div>
 <div id="id-modal" class="modal">

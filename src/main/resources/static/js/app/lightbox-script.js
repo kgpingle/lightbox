@@ -36,20 +36,24 @@ function currentSlide(n) {
 }
 
 
-function search(event) {
+function keypress(event) {
     if (event.keyCode === 13) {
-        var query = document.getElementById("search").value;
-        if ( query === "" || query === undefined) {
-            document.getElementById("error").innerText = "Search is Empty";
-            document.getElementById("error").style.display = "block";
-        } else {
-            document.getElementById("error").style.display = "none";
-            document.getElementById("loading").style.display = "block";
-            var url = "/search?query=" + query;
-            document.getElementById("id-gallery").innerHTML = "";
-            document.getElementById("id-slides").innerHTML = "";
-            loadData(url);
-        }
+        search();
+    }
+}
+
+function search() {
+    var query = document.getElementById("search").value;
+    if ( query === "" || query === undefined) {
+        document.getElementById("error").innerText = "Search is Empty";
+        document.getElementById("error").style.display = "block";
+    } else {
+        document.getElementById("error").style.display = "none";
+        document.getElementById("loading").style.display = "block";
+        var url = "/search?query=" + query;
+        document.getElementById("id-gallery").innerHTML = "";
+        document.getElementById("id-slides").innerHTML = "";
+        loadData(url);
     }
 }
 
@@ -94,9 +98,10 @@ function loadData(url) {
                 }
             }
         };
-        /*xhr.ontimeout = function () {
-            reject('timeout')
-        };*/
+        xhr.ontimeout = function () {
+            document.getElementById("error").innerText = JSON.parse(xhr.status) + " Request timeout. Try again!";
+            document.getElementById("error").style.display = "block";
+        };
         xhr.open('get', url, true);
         xhr.send();
     });

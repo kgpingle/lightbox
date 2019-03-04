@@ -3,6 +3,8 @@ package com.example.lightbox.service;
 import com.example.lightbox.config.CustomImageSearch;
 import com.example.lightbox.converter.CustomSearchResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +52,8 @@ public class CustomImageSearchService {
     private URL generateUrl(final String query) throws MalformedURLException, UnsupportedEncodingException {
 
         final StringBuilder url = new StringBuilder(customImageSearch.getBaseUrl());
-        url.append("key=").append(customImageSearch.getApiKey());
-        url.append("&cx=").append(customImageSearch.getSearchEngineId());
+        url.append("key=").append(StringUtils.newStringUtf8(Base64.decodeBase64(customImageSearch.getApiKey())));
+        url.append("&cx=").append(StringUtils.newStringUtf8(Base64.decodeBase64(customImageSearch.getSearchEngineId())));
         url.append("&alt=json");
         url.append("&q=").append(URLEncoder.encode(query, "UTF-8"));
 
