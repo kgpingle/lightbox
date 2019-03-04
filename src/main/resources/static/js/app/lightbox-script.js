@@ -62,10 +62,14 @@ function loadData(url) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function (e) {
             if (xhr.readyState === 4) {
+                document.getElementById("loading").style.display  = "none";
                 if (xhr.status === 200) {
-                    document.getElementById("loading").style.display  = "none";
                     var response = JSON.parse(xhr.response);
                     var index = 1;
+                    if (response.items === undefined || response.items.length === 0 ) {
+                        document.getElementById("error").innerText = " No results";
+                        document.getElementById("error").style.display = "block";
+                    }
                     for (var i = 0; i < response.items.length; i++) {
                         var item = response.items[i];
                         // in production code, item.htmlTitle should have the HTML entities escaped.
@@ -93,13 +97,13 @@ function loadData(url) {
                         }
                     }
                 } else {
-                    document.getElementById("error").innerText = JSON.parse(xhr.status) + " Server Error";
+                    document.getElementById("error").innerText = "Oops! Something went wrong. Try again.";
                     document.getElementById("error").style.display = "block";
                 }
             }
         };
         xhr.ontimeout = function () {
-            document.getElementById("error").innerText = JSON.parse(xhr.status) + " Request timeout. Try again!";
+            document.getElementById("error").innerText =  "Oops! It took longer than expected. Try again.";
             document.getElementById("error").style.display = "block";
         };
         xhr.open('get', url, true);

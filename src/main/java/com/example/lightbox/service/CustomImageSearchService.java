@@ -2,6 +2,7 @@ package com.example.lightbox.service;
 
 import com.example.lightbox.config.CustomImageSearch;
 import com.example.lightbox.converter.CustomSearchResult;
+import com.example.lightbox.converter.Item;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
@@ -16,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomImageSearchService {
@@ -28,8 +31,22 @@ public class CustomImageSearchService {
         final HttpURLConnection conn = getHttpURLConnection(query);
         final InputStreamReader in = new InputStreamReader((conn.getInputStream()));
         final CustomSearchResult report = parseResponse(in);
+        filterItems(report);
         conn.disconnect();
         return report;
+    }
+
+    private void filterItems(CustomSearchResult report) {
+        final List<Item> filteredItems = report.getItems().stream().filter(this::imagePresentPredicate).collect(Collectors.toList());
+        report.setItems(filteredItems);
+    }
+
+    private boolean imagePresentPredicate(final Item item) {
+        return item.getPagemap() !=null
+                && item.getPagemap().getCseImage() != null
+                && item.getPagemap().getCseThumbnail() != null
+                && item.getPagemap().getCseImage().size() == 1
+                && item.getPagemap().getCseThumbnail().size() == 1;
     }
 
     private HttpURLConnection getHttpURLConnection(final String query) throws IOException {
@@ -46,8 +63,6 @@ public class CustomImageSearchService {
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
     }
-
-
 
     private URL generateUrl(final String query) throws MalformedURLException, UnsupportedEncodingException {
 
