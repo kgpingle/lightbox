@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,11 +38,15 @@ public class CustomImageSearchService {
     }
 
     private void filterItems(CustomSearchResult report) {
-        final List<Item> filteredItems = report.getItems().stream().filter(this::imagePresentPredicate).collect(Collectors.toList());
-        report.setItems(filteredItems);
+        if (report.getItems() != null) {
+            final List<Item> filteredItems = report.getItems().stream().filter(this::isImageResult).collect(Collectors.toList());
+            report.setItems(filteredItems);
+        } else{
+            report.setItems(new ArrayList<>());
+        }
     }
 
-    private boolean imagePresentPredicate(final Item item) {
+    private boolean isImageResult(final Item item) {
         return item.getPagemap() !=null
                 && item.getPagemap().getCseImage() != null
                 && item.getPagemap().getCseThumbnail() != null
