@@ -16,9 +16,9 @@ function search() {
 }
 
 function loadData(url) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function () {
         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function (e) {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 stopLoading();
                 if (xhr.status === 200) {
