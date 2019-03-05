@@ -4,24 +4,23 @@ function openModal() {
     document.getElementById("id-modal").style.display = "block";
 }
 
-// Close the Modal
 function closeModal() {
     document.getElementById("id-modal").style.display = "none";
 }
 
-function plusSlides(n) {
-    currentSlide(slideIndex += n);
+function scrollSlide(changeBy) {
+    showSlide(slideIndex += changeBy);
 }
 
-function currentSlide(n) {
+function showSlide(newSlideIndex) {
     var i;
     var slides =  document.getElementsByClassName("mySlides");
 
-    slideIndex = n;
-    if (n > slides.length) {
+    slideIndex = newSlideIndex;
+    if (newSlideIndex > slides.length) {
         slideIndex = 1
     }
-    if (n < 1) {
+    if (newSlideIndex < 1) {
         slideIndex = slides.length;
     }
 
