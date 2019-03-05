@@ -5,6 +5,7 @@ function keypress(event) {
 }
 
 function search() {
+    resetShowError();
     var query = document.getElementById("search").value;
     resetGallery();
     if ( query === "" || query === undefined) {
@@ -41,7 +42,7 @@ function loadData(url) {
                         showError("No results");
                     }
                 } else {
-                    showError("Oops! Something went wrong. Try again.");
+                    showError("Oops! Something went wrong. Try again after sometime.");
                 }
             }
         };

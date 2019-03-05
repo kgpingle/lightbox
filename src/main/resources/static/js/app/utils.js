@@ -4,6 +4,11 @@ function showError(errorText) {
     document.getElementById("error").style.display = "block";
 }
 
+function resetShowError() {
+    document.getElementById("error").innerText = "";
+    document.getElementById("error").style.display = "none";
+}
+
 function resetGallery() {
     document.getElementById("id-gallery").innerHTML = "";
     document.getElementById("id-slides").innerHTML = "";
