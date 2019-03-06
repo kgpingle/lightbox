@@ -2,6 +2,7 @@
 function showError(errorText) {
     document.getElementById("error").innerText = errorText;
     document.getElementById("error").style.display = "block";
+    stopLoading();
 }
 
 function resetShowError() {

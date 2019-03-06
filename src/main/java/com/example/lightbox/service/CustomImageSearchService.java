@@ -71,12 +71,27 @@ public class CustomImageSearchService {
 
     private URL generateUrl(final String query) throws MalformedURLException, UnsupportedEncodingException {
 
+
         final StringBuilder url = new StringBuilder(customImageSearch.getBaseUrl());
-        url.append("key=").append(StringUtils.newStringUtf8(Base64.decodeBase64(customImageSearch.getApiKey())));
-        url.append("&cx=").append(StringUtils.newStringUtf8(Base64.decodeBase64(customImageSearch.getSearchEngineId())));
+        if (shouldHitPrimarySearchEngine()) {
+            url.append("key=").append(StringUtils.newStringUtf8(Base64.decodeBase64(customImageSearch.getPrimaryApiKey())));
+            url.append("&cx=").append(StringUtils.newStringUtf8(Base64.decodeBase64(customImageSearch.getPrimarySearchEngineId())));
+        } else {
+            url.append("key=").append(StringUtils.newStringUtf8(Base64.decodeBase64(customImageSearch.getSecondaryApiKey())));
+            url.append("&cx=").append(StringUtils.newStringUtf8(Base64.decodeBase64(customImageSearch.getSecondarySearchEngineId())));
+        }
+
         url.append("&alt=json");
         url.append("&q=").append(URLEncoder.encode(query, "UTF-8"));
 
         return new URL(url.toString());
     }
+
+    private boolean shouldHitPrimarySearchEngine() {
+        SHOULD_HIT_PRIMARY = !SHOULD_HIT_PRIMARY;
+       return SHOULD_HIT_PRIMARY;
+    }
+
+    private static boolean SHOULD_HIT_PRIMARY = true;
+
 }
